@@ -90,7 +90,7 @@ app.get("/:customListName", function(req, res) {
 
       } else {
         res.render("list", {
-          listTitle: foundList.name,
+          listTitle: foundList.name + " " + day,
           newListItems: foundList.items
         });
       }
@@ -129,7 +129,7 @@ app.post("/delete", function(req, res) {
   const checkedItemId = req.body.checkbox;
   const listName = req.body.listName;
 
-  if (listName=== day) {
+  if (listName === day) {
     Item.findByIdAndRemove(checkedItemId, function(err) {
       if (err) {
         console.log(err);
@@ -140,10 +140,18 @@ app.post("/delete", function(req, res) {
       res.redirect("/");
     });
   } else {
-    List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItemId}}}, function(err, foundList){
-if (!err) {
-  res.redirect("/" + listName);
-}
+    List.findOneAndUpdate({
+      name: listName
+    }, {
+      $pull: {
+        items: {
+          _id: checkedItemId
+        }
+      }
+    }, function(err, foundList) {
+      if (!err) {
+        res.redirect("/" + listName);
+      }
     })
   }
 
