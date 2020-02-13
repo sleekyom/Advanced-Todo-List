@@ -6,7 +6,7 @@ You can view a demo of the app here:
 https://desolate-island-30655.herokuapp.com/
 
 
-================
+
 Functionalities
 ================
 
